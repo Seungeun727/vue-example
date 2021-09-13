@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js Example</title>
+
+  <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
+  <!-- 상용버전은 디버깅모드 포함 x-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <!-- Vue 렌더링 영역 선언-->
+    <div id="app">
+      {{message}}     <!-- Root 컴포넌트-->
+    </div>
+
+    <!-- Vue 인스턴스 만들기-->
+    <script>
+       var app = new Vue ({
+           el: "#app",  // 뷰 렌더링 영역 셀렉터 ->
+                        // Vue에 마운트 시킬 HTMLElement
+           data: {
+              message: "Hello, Vue.js"
+           },
+
+           // lifeCycle Hooks
+           beforeCreate: function() {
+              // 인스턴스 생성 이전 단계의 라이프 사이클
+              console.log("beforeCreate");
+              console.log("data:", this.message);
+              // 아직 Model1이 정의되지 않음
+           },
+           created: function() {
+              // 인스턴스가 생성된 단계
+              console.log("created:");
+              console.log("data:", this.message);
+           }
+        });
+    </script>
+
+   
+
+    <!-- Vanilla JavaScript로 DOM 다루기 -->
+    <script>
+     // document.getElementById("app").innerHTML 
+     //  = "Hello, Vanilla JS";
+    </script>  
+</body>
+</html>

@@ -8,6 +8,7 @@
 
   <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  
 </head>
 <body>
   
@@ -38,6 +39,17 @@
       template: "<p>&copy; Bit Academy</p>"
     })
 
+    // 살 물건들 목록
+    var shopList =  {
+      // props 받아오기
+      props: ['shopping-items'],
+      template: `
+      <div> 
+        <h2>살 물건들</h2>
+        <ul>
+          <li v-for=
+      </div>
+    }
     // Vue 인스턴스 생성
     var app = new Vue({
       el: "#app",

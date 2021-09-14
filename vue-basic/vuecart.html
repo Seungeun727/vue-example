@@ -12,10 +12,21 @@
     <!-- 렌더링 영역 -->
     <div id="app">
         <cart-header></cart-header>
-        <cart-footer></cart-footer>
+        <!-- true:display: block된 것처럼 화면에 보임-->
+        <!-- false: display: none된 것처럼 화면에 안보임-->
+        <div v-show="showAll"> 
+            <h2>전체목록</h2>
+            <ul>
+                <li v-for="item in items">{{ item.name }}</li>
+            </ul>
+        </div>
+        <shop-list v-bind:shopping-items="items"></shop-list>
+        <cart-input></cart-input>
+        <cart-footer></cart-footer> 
     </div>
     <script>
         // 전역 컴포넌트
+        // * 여러 인스턴스에서 공통으로 사용할 수 있음
         Vue.component("cart-header", {
             template: '<h1>{{ title }}</h1>',
             data: function() {
@@ -29,9 +40,63 @@
             template: "<p>&copy; Bit Academy</p>"
         })
 
+        // 살 물건들 목록
+        var shopList = {
+          // props 받아오기
+          props: ['shopping-items'],
+          template: `
+          <div>
+            <h2>살 물건들</h2>
+            <ul>
+              <li v-for="(item, index) in shoppingItems"
+                  v-if="!item.buy">{{item.name}}
+                  <button @click="buyItem(item, index)">구매</button>
+              </li>
+            </ul>
+          </div>`,
+          methods: {
+              buyItem:  function(item, index) {
+                  console.log("구매할 아이템:", item);
+                  item.buy = true;
+              }
+          }
+        }
+
+        // cart input 컴포넌트
+        var cartInput =  {
+          template: `
+          <div>
+              <input v-model="newItem"><button v-on:click="addItem">추가</button>
+          </div>`,
+          data: function() {
+              return {
+                newItem: ""
+
+              }
+          },
+          methods: {
+              addItem: function() {
+                  console.log("추가할 아이템:", this.newItem);
+              }
+          }
+        }
         //  Vue 인스턴스
         var app = new Vue({
-            el: "#app"
+            el: "#app", // id 셀렉터
+            data : {
+              items: [
+                  {name: "무", buy: false },
+                  {name: "배추", buy: false },
+                  {name: "쪽파", buy: true },
+                  {name: "고춧가루", buy: true }
+              ],
+              showAll: false
+            },
+            // 지역 컴포넌트 사용시 명시적으로 선언해줘야 한다.
+            components: {
+                "shop-list": shopList,
+                "cart-input": cartInput
+            }
         });
     </script>
 </body>

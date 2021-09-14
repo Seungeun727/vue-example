@@ -21,7 +21,7 @@
             </ul>
         </div>
         <shop-list v-bind:shopping-items="items"></shop-list>
-        <cart-input></cart-input>
+        <cart-input v-on:add-item="addItem"></cart-input>
         <cart-footer></cart-footer> 
     </div>
     <script>
@@ -70,13 +70,18 @@
           </div>`,
           data: function() {
               return {
-                newItem: ""
+                newItem: "" // 69 73은 양방향 데이터 변경
 
               }
           },
           methods: {
               addItem: function() {
-                  console.log("추가할 아이템:", this.newItem);
+                  console.log("추가할 아이템:", this.newItem);  // 해당 줄에서는 생성된 newItem을 부모로 전송하여 이벤트를 발생시키는 방법을 생각해본다.
+                  if(this.newItem.trim().length > 0) {
+                    // 구매 아이템을 부모로 전송
+                    this.$emit("add-item", this.newItem.trim());
+                    this.newItem = "";
+                  }
               }
           }
         }
@@ -96,6 +101,18 @@
             components: {
                 "shop-list": shopList,
                 "cart-input": cartInput
+            },
+
+            // addItem 이벤트를 처리할 수 있는 메서드
+            methods: {
+                addItem: function(item) {
+                    console.log("추가할 아이템:", item);
+                    // 배열에 아이템 추가
+                    this.items.push({
+                        name: item, 
+                        buy: false
+                    })
+                }
             }
         });
     </script>

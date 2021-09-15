@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뷰 기초 익히기</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <!-- 렌더링 영역: 뷰 코드 작성 가능해짐-->
+    <div id="app">
+      {{ nextYear('안녕하세요') }}  <!-- 인자: 함수에 넣어주는 것-->
+      <!--{{ person.name }}  {{ person.age }} --> <!-- data의 값이 {{}}를 덮어씌 움 -->
+      <!-- 바인딩: inputData의 값을 넣어줌-->
+      <!-- v-bind 약어는  :만 써도 생략이 가능함.-->
+      <input :type="type" v-bind:value="inputData">
+
+      <a :href="getLink('\c/보리보리boribori_52/channels')">보리보리채널</a>
+      <button>Click Me</button>
+    </div>
+    
+    <script>
+     // 뷰 인스턴스 생성
+    new Vue({
+      el: "#app",
+      data: {  
+        person: {
+          name: '노승은',
+          age: 22
+        },
+        // 바인딩: 속성과 연결해줌
+        inputData: 'Hello',
+        type: 'number',
+        link: 'https://www.youtube.com/'
+      },
+      //: 함수가 들어가는 영역
+      methods: {
+
+        getLink(channel) {
+          return this.link + channel;
+        },
+
+        // nextyear(greting){  --> 함수와 동일함.
+        nextYear: function(greeting) {  // 매개변수: 함수 안에서 설정된 변수
+          return greeting + '! ' + this.person.name + '은  내년에 ' + (this.person.age + 1) + '살 입니다.';
+        },
+        // 다른 함수를 메소드로 사용하는 경우
+        otherMethod: function() {
+          this.nextYear();
+        }
+      } 
+    })
+   </script>
+</body>
+</html>

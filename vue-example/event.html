@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이벤트 발생</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+   <div id="app">
+      <!--
+      {{ year}} <br />
+      <button v-on:click="plus">Add</button>
+      <button v-on:click="minus">Subtraction</button>
+      -->
+      <!-- 이벤트수식어: prevent는 페이지 다시 로드하지 않음 -->
+      <form v-on:submit.prevent="submit">
+        <!--v-on:keyup ->> 마우스에 올라갈 때 -->
+        <!--input type="text" :value="text" @keyup="updateText"--><!--br-->
+
+        <!-- keyup 속성보다 더 간결하게 작성할 수 있음!!-->
+        <input type="text" v-model="text"><br>
+        {{ text }}<br>
+        <button type="submit">등록</button>
+      </form>
+   </div>
+
+   <script>
+    new Vue({
+      el: "#app",
+      data: {
+         year: 2018,
+         text: "text"
+      },
+
+      methods: {
+
+        // keyup 이벤트가 object event를 알아서 넣어줌
+        //updateText(event) {
+          // console.log(event);
+          //this.text = event.target.value;
+        //}
+        submit() {
+          alert('해당 정보가 전송되었습니다.');
+          console.log('hello');
+        }
+        //alert() {
+        //  alert('버튼을 클릭하셨습니다.');
+        //}
+        
+        //plus() {
+          // this.year++;
+        // },
+
+        // minus() {
+          // this.year--;
+        // }
+      }
+    })
+
+   </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <template>
-  <p>&copy; Bit Academy</p>
+    <p>&copy; Bit Academy</p>
 </template>
 
 <script>

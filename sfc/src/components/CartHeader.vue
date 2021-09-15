@@ -3,17 +3,14 @@
 </template>
 
 <script>
-
-import CartHeader from './components/CartHeader';
 export default {
     data: () => {
         return {
             title: "Vue Cart"
         }
     },
-
     computed: {
-        // 미리 계산 수행, 결과를 캐싱
+        //  미리 계산 수행, 결과를 캐싱
         upperTitle: function() {
             return this.title.toUpperCase();
         }
@@ -26,5 +23,4 @@ export default {
         font-size: 2.0em;
         color: blue;
     }
-
 </style>

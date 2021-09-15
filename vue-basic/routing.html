@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Routing Example</title>
+   <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
+   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+   <!-- Vue Router-->
+   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+  <!-- 렌더링 영역 -->
+  <div id="app">
+    <h1>Routing</h1>
+    <ul>
+      <li>
+          <router-link to="/">Main</router-link>
+      </li>
+      <li>
+        <router-link to="/sub">Sub</router-link>
+      </li>
+      <!-- 동적 라우팅: 파라미터를 동적으로 전달 -->
+      <li>
+        
+        <router-link v-bind:to="'/param/' + param1">파라미터 전송</router-link>
+      </li>
+    </ul>
+    <h1>Content Area</h1>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    var main = {
+       template: "<div><h2>Main Page</h2></div>",
+       // 라우팅 페이지는 컴포넌트이므로
+       // 각자의 라이프사이클 훅을 가질 수 있다.
+       created: () => {
+          console.log("Main component created!");
+          // 초기화 작업 수행
+          // 서버로부터 데이터 받아오기
+       },
+       mounted: () => {
+          console.log("Main component mounted!");
+       },
+       destroyed: () => {
+          console.log("Main component destroyed!");
+          // 리소스 정리 작업
+       }
+    }
+
+    var sub = {
+        template: "<div><h2>Sub Page</h2></div>",
+        created: () => {
+          console.log("Sub component created!");
+          // 초기화 작업 수행
+          // 서버로부터 데이터 받아오기
+       },
+       mounted: () => {
+          console.log("Sub component mounted!");
+       },
+       destroyed: () => {
+          console.log("Sub component destroyed!");
+          // 리소스 정리 작업
+       }
+    }
+
+    // 동적 파라미터 전송을 처리하기 위한 컴포넌트
+    var paramComp = {
+        template: "<div><h2>Param: {{ paramVal1 }}</h2></div>",
+        computed: {
+            paramVal1: function() {
+              // 전달된 파라미터는
+              console.log("전달된 파라미터:", this.$route.params)
+              return this.$route.params.param1
+            }
+        }
+    }
+
+    // 라우터 생성: 라우터 정보를 등록
+    var router = new VueRouter({
+        routes: [
+            { path: "/", component: main},    // -> main 컴포넌트 표시
+            { path: "/sub", component: sub},
+            // 라우팅시 동적 파라미터 전달
+            { path: "/param/:param1", component: paramComp}
+        ]
+    })
+
+    new Vue({
+        el: "#app",
+        router: router,     // 라우터 등록
+        data: {
+            param1: "paramVal1"
+        }
+    })
+  </script>
+</body>
+</html>
